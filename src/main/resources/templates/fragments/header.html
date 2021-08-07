@@ -1,0 +1,16 @@
+<!doctype html>
+<html xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nZ/thymeleaf/layout">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+
+<body>
+    <div align="right" th:fragment="header">
+        <table>
+            <tr>
+                <td width="80"><a href="/user/register" th:text="#{header.joinMember}">회원가입</a></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
