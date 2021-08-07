@@ -1,37 +1,41 @@
 package com.pro1.pro.domain;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
-@ToString(exclude = "codeDetails")
-@EqualsAndHashCode(of = "groupCode")
-@Table(name = "code_group")
+@ToString
+@EqualsAndHashCode(of = {"groupCode", "codeValue"})
 @Entity
-public class CodeGroup {
+@IdClass(CodeDetailId.class)
+@Table(name = "code_detail")
+public class CodeDetail {
     @Id
     @Column(length = 3)
     private String groupCode;
 
+    @Id
+    @Column(length = 3)
+    private String codeValue;
+
     @Column(length = 30, nullable = false)
-    private String groupName;
+    private String codeName;
+
+    private int sortSeq;
 
     @Column(length = 1)
     private String useYn = "Y";
 
     @CreationTimestamp
     private LocalDateTime regDate;
-
     @UpdateTimestamp
     private LocalDateTime updDate;
-
-    @OneToMany
-    @JoinColumn(name = "groupCode")
-    private List<CodeDetail> codeDetails;
 }

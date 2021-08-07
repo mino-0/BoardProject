@@ -25,4 +25,22 @@ public class CodeGroupServiceImpl implements CodeGroupService{
     public List<CodeGroup> list() throws Exception {
         return repository.findAll(Sort.by(Sort.Direction.DESC, "groupCode"));
     }
+
+    @Override
+    public CodeGroup read(String groupCode) throws Exception {
+        return repository.getOne(groupCode);
+    }
+
+    @Override
+    public void modify(CodeGroup codeGroup) throws Exception {
+        CodeGroup codeGroupEntity = repository.getOne(codeGroup.getGroupCode());
+        codeGroupEntity.setGroupName(codeGroup.getGroupName());
+
+        repository.save(codeGroupEntity);
+    }
+
+    @Override
+    public void remove(String groupCode) throws Exception {
+        repository.deleteById(groupCode);
+    }
 }

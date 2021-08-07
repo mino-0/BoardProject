@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping(value = "/codegroup")
-public class codeGroupController {
+public class CodeGroupController {
 
     private final CodeGroupService service;
 
@@ -39,4 +39,27 @@ public class codeGroupController {
         model.addAttribute("list", service.list());
     }
 
+    @GetMapping("/read")
+    public void read(String groupCode, Model model) throws Exception {
+        model.addAttribute(service.read(groupCode));
+    }
+
+    @GetMapping("/modify")
+    public void modifyForm(String groupCode, Model model) throws Exception{
+        model.addAttribute(service.read(groupCode));
+    }
+    @PostMapping("/modify")
+    public String modify(CodeGroup codeGroup, RedirectAttributes rttr) throws Exception {
+
+        service.modify(codeGroup);
+        rttr.addFlashAttribute("msg", "SUCCESS");
+        return "redirect:/codegroup/list";
+    }
+
+    @PostMapping("/remove")
+    public String remove(String groupCode, RedirectAttributes rttr) throws Exception{
+        service.remove(groupCode);
+        rttr.addFlashAttribute("msg", "SUCCESS");
+        return "redirect:/codegroup/list";
+    }
 }
