@@ -38,6 +38,5 @@ public class codeGroupController {
     public void list(Model model) throws Exception {
         model.addAttribute("list", service.list());
     }
-    ㅁㄴㄹㅁㄴㅇㄹㅁㄴㄹ;
 
 }
