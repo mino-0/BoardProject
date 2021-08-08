@@ -18,7 +18,7 @@
                 <tr>
                     <td th:text="#{user.userId}">아이디</td>
                     <td><input type="text" name="userId" th:field="*{userId}"></td>
-                    <td><span class="error_message" th:if="${#fields.hasErrors('userId')"
+                    <td><span class="error_message" th:if="${#fields.hasErrors('userId')}"
                         th:errors="*{userId}">userId의 에러메시지</span></td>
                 </tr>
                 <tr>
@@ -34,7 +34,7 @@
                         th:errors="*{userName}">userName의 에러메시지</span></td>
                 </tr>
                 <tr>
-                    <td th:text="${user.job}">직업</td>
+                    <td th:text="#{user.job}">직업</td>
                     <td>
                         <select th:field="*{job}">
                             <option value="" th:each="item : ${jobList}" th:value="${item.value}"
