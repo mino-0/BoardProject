@@ -1,9 +1,12 @@
 package com.pro1.pro.service;
 
+import com.pro1.pro.domain.CodeDetail;
 import com.pro1.pro.domain.CodeGroup;
 import com.pro1.pro.dto.CodeLabelValue;
+import com.pro1.pro.repository.CodeDetailRepository;
 import com.pro1.pro.repository.CodeGroupRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CodeServiceImpl implements CodeService {
     private final CodeGroupRepository repository;
+    @Autowired
+    private final CodeDetailRepository codeDetailRepository;
 
     @Override
     public List<CodeLabelValue> getCodeGroupList() throws Exception {
@@ -24,5 +29,15 @@ public class CodeServiceImpl implements CodeService {
             codeGroupList.add(new CodeLabelValue(codeGroup.getGroupCode(), codeGroup.getGroupName()));
         }
         return codeGroupList;
+    }
+
+    @Override
+    public List<CodeLabelValue> getCodeList(String classCode) throws Exception {
+        List<CodeDetail> codeDetails = codeDetailRepository.findByGroup_code(classCode);
+        List<CodeLabelValue> codeList = new ArrayList<CodeLabelValue>();
+        for (CodeDetail codeDetail : codeDetails) {
+            codeList.add(new CodeLabelValue(codeDetail.getGroupCode(),codeDetail.getCodeName()));
+        }
+        return codeList;
     }
 }
