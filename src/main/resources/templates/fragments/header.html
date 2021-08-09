@@ -1,6 +1,7 @@
 <!doctype html>
 <html xmlns:th="http://thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nZ/thymeleaf/layout">
+    xmlns:layout="http://www.ultraq.net.nZ/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
 <head th:fragment="head">
     <meta http-equiv = "Content-Type" content="text/html; charset=UTF-8">
@@ -13,8 +14,26 @@
 <body>
     <div align="right" th:fragment="header">
         <table>
-            <tr>
-                <td width="80"><a href="/user/register" th:text="#{header.joinMember}">회원가입</a></td>
+            <!-- 로그인 하지 않은 경우 로그인 페이지로 이동할 수 있게 한다. -->
+            <tr sec:authorize = "!isAuthenticated()">
+                <td width="80">
+                    <a href="../user/register.html" th:href="@{/user/register}" 
+                        th:text="#{header.joinMember}">회원가입</a>
+                </td>
+            <!-- 로그인 메뉴 추가 -->
+                <td widht="80">
+                    <a href="../auth/loginForm.html" th:href="@{/auth/login}"
+                        th:text="#{header.login}">로그인</a>
+                </td>
+            </tr>
+            <!-- 로그인을 거친 인증된 사용자인 경우 사용자명을 보여주고 로그아웃 페이지로 이동할 수 있게 한다. -->
+            <tr sec:authorize="isAuthenticated()">
+                <td width="180">
+                    <form action="../auth/logout.html" th:action="@{/auth/logout}" method="POST">
+                        <span sec:authentication="principal.username">홍길동</span>님
+                        <button th:text="#{header.logout}">로그아웃</button>
+                    </form>
+                </td>
             </tr>
         </table>
     </div>

@@ -18,7 +18,7 @@ import java.util.List;
 @EqualsAndHashCode(of = "userNo")
 @ToString
 @Entity
-@Table(name = "userNo")
+@Table(name = "member")
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
