@@ -5,6 +5,7 @@ import com.pro1.pro.dto.CodeLabelValue;
 import com.pro1.pro.service.CodeDetailService;
 import com.pro1.pro.service.CodeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/codedetail")
+@PreAuthorize("hasRole('ADMIN')")
 public class CodeDetailController {
     private final CodeDetailService codeDetailService;
     private final CodeService codeService;

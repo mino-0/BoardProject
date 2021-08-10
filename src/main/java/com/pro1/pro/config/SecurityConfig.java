@@ -4,8 +4,10 @@ import com.pro1.pro.common.security.CustomAccessDeniedHandler;
 import com.pro1.pro.common.security.CustomLoginSuccessHandler;
 import com.pro1.pro.common.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -18,7 +20,8 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
-
+//시큐리티 애너테이션 활성화를 위한 설정
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //데이터 소스
@@ -27,6 +30,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/user/register","/user/registerSuccess").permitAll()
+                .antMatchers("/user/**").hasRole("ADMIN")
+                .antMatchers("/codegroup/**").hasRole("ADMIN")
+                .antMatchers("/codedetail/**").hasRole("ADMIN")
+        //회원게시판 웹 경로 보안 지정
+                .antMatchers("/board/list","/board/read").permitAll()
+                .antMatchers("/board/remobe").hasAnyRole("MEMBER","ADMIN")
+                .antMatchers("/board/**").hasRole("MEMBER")
+                .anyRequest().authenticated();
         http.formLogin()
                 .loginPage("/auth/login")
                 .loginProcessingUrl("/login")
