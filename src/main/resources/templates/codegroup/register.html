@@ -2,9 +2,8 @@
 <html xmlns:th="http://wwww.thymeleaf.org"
     xmlns:layout="http://www.ultraq.net.nZ/thymeleaf/layout"
     layout:decorate="layouts/main_template">
-<head>
-    <title>CodeGroup</title>
-</head>
+    <head th:replace="fragments/header::head('CodeGroup')">
+    </head>
 <body>
     <div layout:fragment="content">
         <h2 th:text="#{codegroup.header.register}">코드그룹등록</h2>

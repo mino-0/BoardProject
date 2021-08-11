@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nZ/thymeleaf/layout"
         layout:decorate="layouts/main_template">
-<head>
-    <title>User</title>
+<head th:replace="fragments/header::head('User')">
 </head>
 <body>
     <div layout:fragment="content">
