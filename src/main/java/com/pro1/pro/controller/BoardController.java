@@ -52,7 +52,7 @@ public class BoardController {
     //    model.addAttribute("list", boardService.list());
 
         Page<Board> page = boardService.list(pageRequestVO);
-        model.addAttribute("gpntn", new PaginationDTO<Board>(page));
+        model.addAttribute("pgntn", new PaginationDTO<Board>(page));
     }
 
     @GetMapping("/read")
