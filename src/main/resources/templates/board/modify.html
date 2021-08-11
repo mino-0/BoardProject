@@ -13,6 +13,10 @@
         <form th:action="@{/board/modify}" id="board" action="list.html" 
             th:object="${board}" method="POST">
             <input type="hidden" name="boardNo" th:field="*{boardNo}">
+            <!-- 현재 페이지 번호, 페이징크기, 검색유청, 검색어를 숨겨진 필드 요소를 사용하여 전달. -->
+            <input type="hidden" name="page" th:value="${pgrq.page}">
+            <input type="hidden" name="sizePerPage" th:value="${pgrq.sizePerPage}">
+
             <table align="center">
                 <tr>
                     <td th:text="#{board.title}">제목</td>
@@ -55,10 +59,12 @@
 
                 $("#btnModify").on("click",function(){
                     formObj.submit();
-                })
+                });
                 $("#btnList").on("click",function(){
-                    self.location = "list";
-                })
+                    // 페이징 관련 정보를 쿼리 파라미터로 전달
+                    // self.location = "list";
+                    self.location = "list[(${pgrq.toUriString()})]";
+                });
             });
         </script>
     </div>
