@@ -25,7 +25,21 @@ public class BoardServiceImpl implements BoardService{
     public List<Board> list() throws Exception {
         return boardRepository.findAll(Sort.by(Sort.Direction.DESC, "boardNo"));
     }
+    @Override
+    public Page<Board> list(PageRequestVO pageRequestVO) throws Exception {
+        //검색 유형과 검색어로 검색된 게시글을 페이지 단위로 반환한다.
+        String searchType = pageRequestVO.getSearchType();
+        String keyword = pageRequestVO.getKeyword();
 
+        int pageNumber = pageRequestVO.getPage() -1;
+        int sizePerPage = pageRequestVO.getSizePerPage();
+
+        Pageable pageRequest = PageRequest.of(pageNumber, sizePerPage, Sort.Direction.DESC, "boardNo");
+
+        return boardRepository.getSearchPage(searchType,keyword,pageRequest);
+    }
+  /*
+    검색기능 전 코드
     @Override
     public Page<Board> list(PageRequestVO pageRequestVO) throws  Exception{
         int pageNumber = pageRequestVO.getPage() -1;
@@ -36,7 +50,7 @@ public class BoardServiceImpl implements BoardService{
         Page<Board> page = boardRepository.findAll(pageRequest);
 
         return page;
-    }
+    }*/
 
     @Override
     public Board read(Long boardNo) throws Exception {

@@ -14,6 +14,9 @@
                 <!-- 현재 페이지번호, 페이징 크기를 숨겨진 필드 요소로 사용하여 전달 -->
                 <input type="hidden" name="page" th:value="${pgrq.page}">
                 <input type="hidden" name="sizePerPage" th:value="${pgrq.sizePerPage}">
+                <!-- 검색유형, 검색어를 숨겨진 피륻 요소를 사용하여 전달 -->
+                <input type="hidden" name="searchType" th:value="${pgrq.searchType}">
+                <input type="hidden" name="keyword" th:value="${pgrq.keyword}">
 
                 <table align="center">
                     <tr>

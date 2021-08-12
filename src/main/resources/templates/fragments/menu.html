@@ -16,6 +16,10 @@
                         <a href="../board/list.html" th:href="@{/board/list}" th:text="#{menu.board.member}">
                             회원게시판</a>
                     </td>
+                    <td width="120">
+                        <a href="../notice/list.html" th:href="@{/notice/list}"
+                        th:text="#{menu.notice.member}">공지사항</a>
+                    </td>
                 </th:block>
                 <!-- 인증된 사용자인 경우 true -->
                 <th:block sec:authorize="isAuthenticated()">
@@ -31,6 +35,10 @@
                             <a href="../board/list.html" th:href="@{/board/list}" th:text="#{menu.board.member}">
                                 회원게시판</a>
                         </td>
+                        <td width="120">
+                            <a href="../notice/list.html" th:href="@{/notice/list}"
+                            th:text="#{menu.notice.member}">공지사항</a>
+                        </td>
 
                     </th:block>
                     <!-- 회원 권한을 가진 사용자인 경우 true -->
@@ -39,6 +47,10 @@
                         <td width="120">
                             <a href="../board/list.html" th:href="@{/board/list}" th:text="#{menu.board.member}">
                                 회원게시판</a>
+                        </td>
+                        <td width="120">
+                            <a href="../notice/list.html" th:href="@{/notice/list}"
+                            th:text="#{menu.notice.member}">공지사항</a>
                         </td>
                     </th:block>
                 </th:block>
