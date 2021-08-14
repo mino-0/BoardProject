@@ -12,6 +12,11 @@
 
         <form action="list.html" th:action="@{/item/modify}" id="item" th:object="${item}" method="POST"
             enctype="multipart/form-data">
+
+            <input type="hidden" name="itemId" th:field="*{itemId}">
+            <input type="hidden" name="pictureUrl" th:field="*{pictureUrl}">
+            <input type="hidden" name="previewUrl" th:field="*{previewUrl}">
+
             <table align="center">
                 <tr>
                     <td th:text="#{item.itemName}">상품명</td>

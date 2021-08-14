@@ -48,7 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //상품 관리 웹 경로 보안 지정
                 .antMatchers("/item/list").permitAll()
                 .antMatchers("/item/read","/item/picture","/item/display").hasAnyRole("MEMBER","ADMIN")
+                .antMatchers("/item/buy","/item/success").hasRole("MEMBER")
                 .antMatchers("/item/**").hasRole("ADMIN")
+                .antMatchers("/coin/**").hasRole("MEMBER")
+                .antMatchers("/useritem/**").hasRole("MEMBER")
                 .anyRequest().authenticated();
         http.formLogin()
                 .loginPage("/auth/login")

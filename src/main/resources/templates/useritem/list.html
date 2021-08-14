@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+    xmlns:layout="http://www.ultraq.net.nZ/thymeleaf/layout"
+    layout:decorate="layouts/main_template">
+<head th:replace="fragments/header :: head('UserItem')">
+</head>
+<body>
+    <div layout:fragment="content">
+        <h2 th:text="#{useritem.header.list}"></h2>
+
+        <table align="center" border="1"> 
+            <tr>
+                <td align="center" width="80" th:text="#{useritem.no}">번호</td>
+                <td align="center" width="100" th:text="#{useritem.itemName}">상품명</td>
+                <td align="center" width="100" th:text="#{useritem.itemPrice}">가격</td>
+                <td align="center" width="100" th:text="#{useritem.regdate}">구매일시</td>
+                <td align="center" width="100" th:text="#{useritem.download}">다운로드</td>
+            </tr>
+            <tr th:if="${#lists.isEmpty(list)}">
+                <td colspan="5" th:text="#{common.listEmpty}">
+                    List is empty
+                </td>
+            </tr>
+            <tr th:each="useritem : ${list}">
+                <td align="center" th:text="${useritem.userItemNo}">${useritem.userItemNo}</td>
+                <td align="left">
+                    <a href="read.html" th:href="|/useritem/read?userItemNo=${useritem.userItemNo}|"
+                        th:text="${useritem.itemName}">${useritem.itemName}</a>
+                </td>
+                <td align="right" th:text="${useritem.price}">${useritem.price}</td>
+                <td align="center" th:text="${#temporals.format(useritem.regDate, 'yyyy-MM-dd HH:mm')}"></td>
+                <td align="center">
+                    <a href="." th:href="|/useritem/download?userItemNo=${useritem.userItemNo}|">
+                        DOWNLOAD</a>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+</html>

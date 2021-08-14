@@ -64,6 +64,24 @@
                             <a href="../item/list.html" th:href="@{/item/list}"
                                 th:text="#{menu.item.member}">상품</a>
                         </td>
+                        <!-- 코인충전과 충전내역 메뉴에 추가  -->
+                        <td width="120">
+                            <a href="../coin/charge.html" th:href="@{/coin/charge}"
+                                th:text="#{menu.coin.charge}">코인충전</a>
+                        </td>
+                        <td width="120">
+                            <a href="../coin/list.html" th:href="@{/coin/list}"
+                                th:text="#{menu.coin.list}">충전내역</a>
+                        </td>
+                        <!-- 구매상품과 구매내역을 메뉴에 추가한다. -->
+                        <td width="120">
+                            <a href="../useritem/list.html" th:href="@{/useritem/list}" 
+                                th:text="#{menu.useritem.list}">구매상품</a>
+                        </td>
+                        <td width="120">
+                            <a href="../coin/listPay.html" th:href="@{/coin/listPay}"
+                                th:text="#{menu.coin.listPay}">구매내역</a>
+                        </td>
                     </th:block>
                 </th:block>
             </tr>

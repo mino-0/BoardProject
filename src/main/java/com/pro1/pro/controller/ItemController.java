@@ -1,15 +1,22 @@
 package com.pro1.pro.controller;
 
+import com.pro1.pro.common.security.domain.CustomUser;
 import com.pro1.pro.domain.Item;
+import com.pro1.pro.domain.Member;
 import com.pro1.pro.prop.ShopProperties;
 import com.pro1.pro.service.ItemService;
+import com.pro1.pro.service.MemberService;
+import com.pro1.pro.service.UserItemService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
+import org.aspectj.bridge.Message;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -24,6 +31,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -33,6 +41,12 @@ public class ItemController {
     private final ItemService itemService;
 
     private final ShopProperties shopProperties;
+
+    private final MemberService memberService;
+
+    private final UserItemService userItemService;
+
+    private final MessageSource messageSource;
 
     @GetMapping("/register")
     @PreAuthorize("hasRole('ADMIN')")
@@ -95,7 +109,7 @@ public class ItemController {
         MultipartFile previewFile = item.getPreview();
 
         if (previewFile != null && previewFile.getSize() > 0) {
-            String createdFilename = uploadFile(previewFile.getOriginalFilename(), pictureFile.getBytes());
+            String createdFilename = uploadFile(previewFile.getOriginalFilename(), previewFile.getBytes());
 
             item.setPreviewUrl(createdFilename);
         }
@@ -180,5 +194,29 @@ public class ItemController {
             }
         }
         return null;
+    }
+    @PostMapping("/buy")
+    public String buy(Long itemId, RedirectAttributes rttr, Authentication authentication) throws Exception {
+        CustomUser customUser = (CustomUser) authentication.getPrincipal();
+        Member member = customUser.getMember();
+
+        Long userNo = member.getUserNo();
+
+        member.setCoin(memberService.getCoin(userNo));
+
+        Item item = itemService.read(itemId);
+
+        userItemService.register(member, item);
+
+
+        String message = messageSource.getMessage("item.purchaseComplete", null, Locale.KOREAN);
+
+
+        rttr.addFlashAttribute("msg", message);
+        return "redirect:/item/success";
+    }
+    @GetMapping("/success")
+    public String success()throws Exception {
+        return "item/success";
     }
 }

@@ -19,5 +19,7 @@ public interface MemberService {
 
     public void setupAdmin(Member member) throws Exception;
 
+    public int getCoin(Long userNo) throws Exception;
+
 
 }
