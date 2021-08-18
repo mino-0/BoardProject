@@ -50,6 +50,9 @@ dependencies {
 	implementation 'com.querydsl:querydsl-apt:5.0.0'
 	// https://mvnrepository.com/artifact/com.querydsl/querydsl-core
 	implementation 'com.querydsl:querydsl-core:5.0.0'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
+	implementation 'org.springframework.boot:spring-boot-starter-actuator:2.5.3'
+
 
 // Querydsl
 annotationProcessor group: 'com.querydsl', name: 'querydsl-apt', version: '5.0.0'

@@ -1,5 +1,6 @@
 package com.pro1.pro.service;
 
+import com.pro1.pro.common.exception.NotEnoughCoinException;
 import com.pro1.pro.domain.Item;
 import com.pro1.pro.domain.Member;
 import com.pro1.pro.domain.PayCoin;
@@ -10,6 +11,7 @@ import com.pro1.pro.repository.UserItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Transient;
 import java.time.LocalDateTime;
@@ -23,7 +25,7 @@ public class UserItemServiceImpl implements UserItemService{
     private final PayCoinRepository payCoinRepository;
     private final MemberRepository memberRepository;
 
-    @Transient
+    @Transactional
     @Override
     public void register(Member member, Item item) throws Exception {
         Long userNo = member.getUserNo();
@@ -44,6 +46,10 @@ public class UserItemServiceImpl implements UserItemService{
 
         int coin = memberEntity.getCoin();
         int amount = paycoin.getAmount();
+
+        if (coin < price) {
+            throw new NotEnoughCoinException("There is Not Enough Coin");
+        }
 
         memberEntity.setCoin(coin - amount);
 

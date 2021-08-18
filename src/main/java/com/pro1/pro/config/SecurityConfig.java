@@ -4,6 +4,7 @@ import com.pro1.pro.common.security.CustomAccessDeniedHandler;
 import com.pro1.pro.common.security.CustomLoginSuccessHandler;
 import com.pro1.pro.common.security.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -32,6 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAnyRole("ADMIN")
                 .antMatchers("/").permitAll()
                 .antMatchers("/auth/login").permitAll()
                 .antMatchers("/user/register", "/user/registerSuccess").permitAll()
@@ -50,8 +52,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/item/read","/item/picture","/item/display").hasAnyRole("MEMBER","ADMIN")
                 .antMatchers("/item/buy","/item/success").hasRole("MEMBER")
                 .antMatchers("/item/**").hasRole("ADMIN")
+                //코인
                 .antMatchers("/coin/**").hasRole("MEMBER")
+                //유저아이템
                 .antMatchers("/useritem/**").hasRole("MEMBER")
+                //공개자료실
+                .antMatchers("/pds/list", "/pds/read", "/pds/getAttach/**", "pds/downloadFile").permitAll()
+                .antMatchers("/pds/**").hasRole("ADMIN")
+                //에러페이지 웹 경로 보안
+                .antMatchers("/error/**").permitAll()
                 .anyRequest().authenticated();
         http.formLogin()
                 .loginPage("/auth/login")

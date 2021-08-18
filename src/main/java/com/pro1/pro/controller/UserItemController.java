@@ -1,5 +1,6 @@
 package com.pro1.pro.controller;
 
+import com.pro1.pro.common.exception.NotMyItemException;
 import com.pro1.pro.common.security.domain.CustomUser;
 import com.pro1.pro.domain.Item;
 import com.pro1.pro.domain.Member;
@@ -62,6 +63,14 @@ public class UserItemController {
     public ResponseEntity<byte[]> download(Long userItemNo, Authentication authentication) throws Exception {
         UserItem userItem = service.read(userItemNo);
 
+        //구매한 상품이 사용자의 것인지 체크
+        CustomUser customUser = (CustomUser) authentication.getPrincipal();
+        Member member = customUser.getMember();
+
+        if (userItem.getUserNo() != member.getUserNo()) {
+            throw new NotMyItemException("It is Not My Item");
+        }
+
         String fullName = userItem.getPictureUrl();
 
         InputStream in = null;
@@ -86,5 +95,11 @@ public class UserItemController {
             in.close();
         }
         return entity;
+    }
+
+    @GetMapping("/notMyItem")
+    @PreAuthorize("hasAnyRole('ADMIN','MEMBER')")
+    public void notMyItem(Model model) throws Exception {
+
     }
 }

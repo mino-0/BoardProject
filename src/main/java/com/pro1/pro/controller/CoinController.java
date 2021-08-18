@@ -33,6 +33,7 @@ public class CoinController {
 
         model.addAttribute(chargeCoin);
     }
+
     @PostMapping("/charge")
     @PreAuthorize("hasRole('MEMBER')")
     public String charge(int amount, RedirectAttributes rttr, Authentication authentication) throws Exception {
@@ -69,6 +70,7 @@ public class CoinController {
 
         model.addAttribute("list", service.list(userNo));
     }
+
     @GetMapping("/listPay")
     @PreAuthorize("hasRole('MEMBER')")
     public void listPayHistory(Model model, Authentication authentication) throws Exception {
@@ -80,5 +82,9 @@ public class CoinController {
         model.addAttribute("list", service.listPayHistory(userNo));
     }
 
+    @GetMapping("/notEnoughCoin")
+    @PreAuthorize("hasRole('MEMBER')")
+    public void notEnoughCoin(Model model) throws Exception {
 
+    }
 }

@@ -24,6 +24,10 @@
                         <a href="../item/list.html" th:href="@{/item/list}" th:text="#{menu.item.member}">
                         상품</a>
                     </td>
+                    <td width="120">
+                        <a href="../pds/list.html" th:href="@{/pds/list}" th:text="#{menu.pds.member}">
+                        공개자료실</a>
+                    </td>
                 </th:block>
                 <!-- 인증된 사용자인 경우 true -->
                 <th:block sec:authorize="isAuthenticated()">
@@ -47,14 +51,18 @@
                             <a href="../item/list.html" th:href="@{/item/list}" th:text="#{menu.item.admin}">
                                 상품관리</a>
                         </td>
+                        <td width="120">
+                            <a href="../pds/list.html" th:href="@{/pds/list}" th:text="#{menu.pds.admin}">
+                                공개자료실</a>
+                        </td>
 
                     </th:block>
                     <!-- 회원 권한을 가진 사용자인 경우 true -->
                     <th:block sec:authorize="hasRole('MEMBER')">
                         <!-- 회원게시판 메뉴에 추가 -->
                         <td width="120">
-                            <a href="../board/list.html" th:href="@{/board/list}" th:text="#{menu.board.member}">
-                                회원게시판</a>
+                            <a href="../board/list.html" th:href="@{/board/list}" 
+                            th:text="#{menu.board.member}"> 회원게시판</a>
                         </td>
                         <td width="120">
                             <a href="../notice/list.html" th:href="@{/notice/list}"
@@ -81,6 +89,10 @@
                         <td width="120">
                             <a href="../coin/listPay.html" th:href="@{/coin/listPay}"
                                 th:text="#{menu.coin.listPay}">구매내역</a>
+                        </td>
+                        <td width="120">
+                            <a href="../pds/list.html" th:href="@{/pds/list}" 
+                            th:text="#{menu.pds.member}"> 공개자료실</a>
                         </td>
                     </th:block>
                 </th:block>
